@@ -1,3 +1,4 @@
+from .string import String
 from ..java_class_def import JavaClassDef
 from ..java_field_def import JavaFieldDef
 from ..java_method_def import java_method_def, JavaMethodDef
@@ -46,6 +47,13 @@ class Integer(metaclass=JavaClassDef, jvm_name='java/lang/Integer'):
     def __repr__(self):
         return "%r"%self.__value
     #
+
+    @java_method_def(name='toString', signature='()Ljava/lang/String;', native=False)
+    def to_string(self, emu):
+        s = str(self.__value)
+        return String(s)
+    #
+
 
     #TODO: 在继承多态机制完善后移动到Object类上
     @java_method_def(name='getClass', signature='()Ljava/lang/Class;', native=False)

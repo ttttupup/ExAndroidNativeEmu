@@ -1,3 +1,5 @@
+from .list import List
+from .signature import Signature
 from ..java_class_def import JavaClassDef
 from ..java_field_def import JavaFieldDef
 from ..java_method_def import java_method_def, JavaMethodDef
@@ -26,12 +28,17 @@ class PackageInfo(metaclass=JavaClassDef, jvm_name='android/content/pm/PackageIn
 jvm_fields=[
                      JavaFieldDef('applicationInfo', 'Landroid/content/pm/ApplicationInfo;', False),
                      JavaFieldDef('firstInstallTime', 'J', False),
-                     JavaFieldDef('lastUpdateTime', 'J', False)                
+                     JavaFieldDef('lastUpdateTime', 'J', False),
+                     JavaFieldDef('signatures', '[Landroid/content/pm/Signature;', False),
                     ]):
     def __init__(self, pyPkgName):
         self.applicationInfo = ApplicationInfo(pyPkgName)
         self.firstInstallTime = int(time.time())
         self.lastUpdateTime = self.firstInstallTime
+        signature = Signature()
+        l_add = list()
+        l_add.append(signature)
+        self.signatures = List(l_add)
     #
 #
 

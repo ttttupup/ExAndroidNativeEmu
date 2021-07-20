@@ -3,8 +3,8 @@ from .java_class_def import JavaClassDef
 
 class JavaMethodDef:
 
-    def __init__(self, func_name, func, name, signature, native, args_list=None, modifier=None, ignore=None):
-        self.jvm_id = next_method_id()
+    def __init__(self, func_name, func, name, signature, native, args_list=None, modifier=None, ignore=None, jvm_id=None):
+
         self.func_name = func_name
         self.func = func
         self.name = name
@@ -14,9 +14,13 @@ class JavaMethodDef:
         self.args_list = args_list
         self.modifier = modifier
         self.ignore = ignore
+        if jvm_id is None:
+            self.jvm_id = next_method_id()
+        else:
+            self.jvm_id = jvm_id
 
 
-def java_method_def(name, signature, native=False, args_list=None, modifier=None, ignore=False):
+def java_method_def(name, signature, native=False, args_list=None, modifier=None, ignore=False, jvm_id=None):
     def java_method_def_real(func):
         def native_wrapper(*args, **kwargs):
             clz = args[0].__class__
@@ -49,7 +53,8 @@ def java_method_def(name, signature, native=False, args_list=None, modifier=None
         wrapper.jvm_method = JavaMethodDef(func.__name__, wrapper, name, signature, native,
                                            args_list=args_list,
                                            modifier=modifier,
-                                           ignore=ignore)
+                                           ignore=ignore,
+                                           jvm_id=jvm_id)
         return wrapper
     #
     return java_method_def_real

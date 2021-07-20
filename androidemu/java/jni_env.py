@@ -770,7 +770,7 @@ class JNIEnv:
         if not isinstance(obj, jobject):
             raise ValueError('Expected a jobject.')
         pyobj = JNIEnv.jobject_to_pyobject(obj)
-
+        # method =  pyobj.find_method_by_id(method_id)
         method = pyobj.__class__.find_method_by_id(method_id)
         if method is None:
             # TODO: Proper Java error?

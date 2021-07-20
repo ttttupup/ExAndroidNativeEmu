@@ -1,7 +1,7 @@
 from ..java_class_def import JavaClassDef
 from ..java_field_def import JavaFieldDef
 from ..java_method_def import java_method_def, JavaMethodDef
-from ..classes.context import ContextImpl
+from ..classes.context import ContextImpl, ContextWrapper
 from ..constant_values import *
 from .application import Application
 
@@ -67,7 +67,7 @@ class View(metaclass=JavaClassDef, jvm_name='android/view/View',
     #
 #
 
-class Activity(metaclass=JavaClassDef, jvm_name='android/app/Activity'):
+class Activity(ContextWrapper, metaclass=JavaClassDef, jvm_name='android/app/Activity', jvm_super=ContextWrapper):
     def __init__(self):
         self.__window = Window()
     #
